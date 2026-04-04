@@ -7,7 +7,7 @@ import { ChatProvider } from './contexts/ChatContext';
 import { ChatWithAdminProvider } from './contexts/ChatWithAdminContext';
 import { AdminChatProvider } from './contexts/AdminChatContext';
 import { NotificationProvider } from './contexts/NotificationContext';
-import ChatLauncher from './components/Chat/ChatLauncher';
+// import ChatLauncher from './components/Chat/ChatLauncher';
 import ChatLauncherWithAdmin from './components/ChatWithAdmin/ChatLauncher_withadmin';
 import ScrollToTop from './utils/ScrollToTop';
 import { ToastContainer } from 'react-toastify';
@@ -97,7 +97,7 @@ const App = () => {
                                 
                                 {!isAdminRoute && <Footer />}
                                 
-                                {!isAdminRoute && user && user.role === 'user' && <ChatLauncher />}
+                                {/* {!isAdminRoute && user && user.role === 'user' && <ChatLauncher />} */}
                                 {!isAdminRoute && user && user.role === 'user' && <ChatLauncherWithAdmin />}
                             </div>
                         </ChatProvider>
