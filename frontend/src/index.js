@@ -51,6 +51,12 @@ style.textContent = `
         min-height: calc(100vh - 80px);
         padding-top: 80px;
     }
+
+    .main-content.auth-page-route {
+        min-height: 100vh;
+        padding-top: 0 !important;
+        background: linear-gradient(135deg, #f4fbff 0%, #fff7ef 100%);
+    }
     
     .main-content.admin-page {
         padding-top: 0 !important;
