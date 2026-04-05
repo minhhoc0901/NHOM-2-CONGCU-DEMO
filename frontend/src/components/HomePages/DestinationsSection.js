@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import '../../styles/HomePageCSS/DestinationsSection.css';
 import axios from 'axios';
+import { getDisplayImageUrl } from '../../utils/imageUtils';
 
 const DestinationsSection = () => {
     const [activeTab, setActiveTab] = useState('all');
@@ -161,12 +162,11 @@ const DestinationsSection = () => {
                         >
                             {/* Image */}
                             <div className="pydes-card-image">
-                                <img 
-                                    src={destination.introduction?.image ? `http://localhost:5000${destination.introduction.image}` : placeholderImage} 
-                                    alt={destination.title} 
+                                <img
+                                    src={getDisplayImageUrl(destination.introduction?.image)}
+                                    alt={destination.title}
                                 />
-                                <div className="pydes-overlay"></div>
-                                
+
                                 {/* Rating */}
                                 <div className="pydes-rating">
                                     {renderStars(destination.average_rating || 0)}
