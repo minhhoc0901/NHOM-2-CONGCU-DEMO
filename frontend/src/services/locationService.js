@@ -30,5 +30,22 @@ export const locationService = {
             console.error("Failed to fetch locations:", error);
             return [];
         }
+    },
+
+    async getLocationById(id) {
+        try {
+            const response = await fetch(`${API_URL}/locations/${id}`);
+
+            if (!response.ok) {
+                throw new Error('Không thể tải thông tin địa điểm.');
+            }
+
+            const result = await response.json();
+            console.log("locationService - Location detail:", result);
+            return result;
+        } catch (error) {
+            console.error("Failed to fetch location:", error);
+            throw error;
+        }
     }
 };
