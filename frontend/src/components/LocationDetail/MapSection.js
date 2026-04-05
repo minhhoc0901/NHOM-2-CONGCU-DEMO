@@ -1,11 +1,9 @@
-
-
 import React, { useEffect } from "react";
 import { MapContainer, TileLayer, Marker, Popup, useMap } from "react-leaflet";
-import L from "leaflet"; // Import Leaflet để tùy chỉnh marker
+import L from "leaflet";
 import "leaflet/dist/leaflet.css";
 
-// Tùy chỉnh icon cho marker
+// Custom marker icon
 const customIcon = new L.Icon({
   iconUrl: "https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/images/marker-icon.png",
   iconSize: [25, 41],
@@ -15,7 +13,7 @@ const customIcon = new L.Icon({
   shadowSize: [41, 41],
 });
 
-// Component để cập nhật vị trí bản đồ khi viewport thay đổi
+// Component để cập nhật center map
 const MapUpdater = ({ center }) => {
   const map = useMap();
   useEffect(() => {
@@ -27,6 +25,16 @@ const MapUpdater = ({ center }) => {
 const MapSection = ({ viewport, setViewport }) => {
   const center = [viewport.latitude, viewport.longitude];
 
+  const handleMoveEnd = (map) => {
+    const newCenter = map.getCenter();
+    setViewport({
+      ...viewport,
+      latitude: newCenter.lat,
+      longitude: newCenter.lng,
+      zoom: map.getZoom(),
+    });
+  };
+
   return (
     <section id="map" className="map mb-8">
       <h2 className="text-2xl font-semibold mb-4">Bản đồ địa điểm</h2>
@@ -34,17 +42,7 @@ const MapSection = ({ viewport, setViewport }) => {
         center={center}
         zoom={viewport.zoom}
         style={{ width: viewport.width, height: viewport.height }}
-        whenCreated={(map) => {
-          map.on("moveend", () => {
-            const newCenter = map.getCenter();
-            setViewport({
-              ...viewport,
-              latitude: newCenter.lat,
-              longitude: newCenter.lng,
-              zoom: map.getZoom(),
-            });
-          });
-        }}
+        whenCreated={(map) => map.on("moveend", () => handleMoveEnd(map))}
       >
         <MapUpdater center={center} />
         <TileLayer

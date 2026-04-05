@@ -14,8 +14,6 @@ const CommentSection = ({ locationId }) => {
   const [replyText, setReplyText] = useState('');
   const [loading, setLoading] = useState(false);
   const { user, isAuthenticated, getToken } = useAuth();
-
-  // Fetch comments
   useEffect(() => {
     const fetchComments = async () => {
       try {

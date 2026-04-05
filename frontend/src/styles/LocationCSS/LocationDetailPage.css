@@ -5,9 +5,7 @@
   background-color: var(--sidebar-border-color-hover);
 }
 
-/* === STYLING MỚI CHO PHẦN KHÁCH SẠN LIÊN KẾT === */
 
-/* Container cho mỗi khách sạn */
 .hotel-link-item {
   display: flex;
   align-items: flex-start; /* Căn các mục theo đầu dòng */
@@ -26,7 +24,6 @@
   border-color: var(--content-border-light-color);
 }
 
-/* Icon tòa nhà */
 .hotel-link-item .hotel-icon {
   margin-right: 0.875rem; /* 14px */
   margin-top: 0.25rem; /* 4px */
@@ -39,7 +36,6 @@
   color: var(--secondary); /* Màu cam/vàng khi hover */
 }
 
-/* Tên khách sạn */
 .hotel-link-item .hotel-name {
   font-weight: 600; /* Semi-bold */
   color: var(--content-heading-color);
