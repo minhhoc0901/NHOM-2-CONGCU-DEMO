@@ -211,8 +211,6 @@ const DestinationsSection = () => {
                         </div>
                     ))}
                 </div>
-
-                {/* ========== VIEW ALL BUTTON ========== */}
                 <div 
                     className="pydes-view-all"
                     data-aos="fade-up"
