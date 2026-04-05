@@ -1,3 +1,4 @@
+import axios from 'axios';
 import { CONFIG } from '../config';
 
 const API_BASE_URL = CONFIG.API_API_URL;
@@ -78,6 +79,44 @@ export const tourService = {
             return await response.json();
         } catch (error) {
             console.error(`Error fetching departures for tour ${tourId}:`, error);
+            throw error;
+        }
+    },
+
+    async getTourById(tourId) {
+        try {
+            const response = await axios.get(`${API_BASE_URL}/tours/${tourId}`);
+            return response.data;
+        } catch (error) {
+            console.error(`Error fetching tour ${tourId}:`, error);
+            throw error;
+        }
+    },
+
+    async createTour(formData, token) {
+        try {
+            const response = await axios.post(`${API_BASE_URL}/tours`, formData, {
+                headers: {
+                    Authorization: `Bearer ${token}`,
+                },
+            });
+            return response.data;
+        } catch (error) {
+            console.error('Error creating tour:', error);
+            throw error;
+        }
+    },
+
+    async updateTour(tourId, formData, token) {
+        try {
+            const response = await axios.put(`${API_BASE_URL}/tours/${tourId}`, formData, {
+                headers: {
+                    Authorization: `Bearer ${token}`,
+                },
+            });
+            return response.data;
+        } catch (error) {
+            console.error(`Error updating tour ${tourId}:`, error);
             throw error;
         }
     },

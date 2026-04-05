@@ -129,7 +129,7 @@ exports.createTour = async (req, res) => {
     }
 
     // Parse các trường dạng mảng từ chuỗi JSON
-    const fieldsToProcess = ['highlights', 'schedule', 'includes', 'excludes', 'notes', 'selected_location_ids'];
+    const fieldsToProcess = ['highlights', 'schedule', 'includes', 'excludes', 'notes', 'selected_location_ids', 'location_ids'];
     
     fieldsToProcess.forEach(field => {
       if (typeof tourData[field] === 'string') {
@@ -154,6 +154,13 @@ exports.createTour = async (req, res) => {
     // Thêm location_ids nếu có selected_location_ids nhưng không có location_ids
     if (tourData.selected_location_ids && !tourData.location_ids) {
       tourData.location_ids = tourData.selected_location_ids;
+    }
+
+    // Đảm bảo location_ids là một mảng
+    if (!tourData.location_ids) {
+      tourData.location_ids = [];
+    } else if (!Array.isArray(tourData.location_ids)) {
+      tourData.location_ids = [tourData.location_ids];
     }
 
     // Kiểm tra từng lịch trình có địa điểm không
@@ -194,7 +201,24 @@ exports.createTour = async (req, res) => {
       notes: tourData.notes?.length
     });
 
-    const tourId = await createTour(tourData);
+    // Chuẩn bị dữ liệu để truyền vào model (chỉ lấy các trường cần thiết)
+    const tourDataForModel = {
+      destination: tourData.destination,
+      image: tourData.image,
+      departure_from: tourData.departure_from,
+      duration: tourData.duration,
+      description: tourData.description,
+      highlights: tourData.highlights,
+      schedule: tourData.schedule,
+      includes: tourData.includes,
+      excludes: tourData.excludes,
+      notes: tourData.notes,
+      locations: tourData.location_ids, // Truyền location_ids dưới tên locations cho model
+      user_id: tourData.user_id,
+      status: tourData.status
+    };
+
+    const tourId = await createTour(tourDataForModel);
 
     //GỬI THÔNG BÁO CHO ADMIN
     const io = req.app.get('io');
