@@ -7,6 +7,11 @@ import LoginPage from './pages/auth/LoginPage';
 import RegisterPage from './pages/auth/RegisterPage';
 import ForgotPasswordPage from './pages/auth/ForgotPasswordPage';
 import ProfilePage from './pages/auth/ProfilePage';
+import CreateItinerary from './pages/CreateItinerary';
+import UserTours from './components/users/Tour/UserTours';
+import TourPreview from './components/users/Tour/TourPreview';
+import EditTour from './components/users/Tour/EditTour';
+import PlanPage from './pages/PlanPage';
 import PrivateRoute from './components/auth/PrivateRoute';
 
 
@@ -27,6 +32,37 @@ const AppRouter = () => {
                     </PrivateRoute>
                 }
             />
+            <Route path="/plan" element={<PlanPage />} />
+
+             {/* ===== TOUR & ITINERARY ROUTES ===== */}
+            <Route path="/create-itinerary" element={<CreateItinerary />} />
+
+
+             <Route
+                path="/user/my-tours"
+                element={
+                    <PrivateRoute>
+                        <UserTours />
+                    </PrivateRoute>
+                }
+            />
+            <Route
+                path="/user/tour-preview/:id"
+                element={
+                    <PrivateRoute>
+                        <TourPreview />
+                    </PrivateRoute>
+                }
+            />
+            <Route
+                path="/user/edit-tour/:id"
+                element={
+                    <PrivateRoute>
+                        <EditTour />
+                    </PrivateRoute>
+                }
+            />
+
         </Routes>
     );
 };
