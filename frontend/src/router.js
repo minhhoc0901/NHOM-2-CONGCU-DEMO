@@ -13,6 +13,13 @@ import TourPreview from './components/users/Tour/TourPreview';
 import EditTour from './components/users/Tour/EditTour';
 import PlanPage from './pages/PlanPage';
 import PrivateRoute from './components/auth/PrivateRoute';
+import TourListPage from './pages/TourListPage';
+import BookingPage from './pages/BookingPage'; 
+import PaymentPage from './pages/PaymentPage';
+import PaymentResultPage from './pages/PaymentResultPage';
+import MyBookingsPage from './pages/MyBookingsPage';
+import InvoicePage from './pages/InvoicePage';
+import VerifyInvoicePage from './pages/VerifyInvoicePage.js';
 
 
 const AppRouter = () => {
@@ -33,6 +40,15 @@ const AppRouter = () => {
                 }
             />
             <Route path="/plan" element={<PlanPage />} />
+
+            <Route path="/tours" element={<TourListPage />} />
+
+            {/* ===== BOOKING & PAYMENT ROUTES ===== */}
+            <Route path="/booking/:tourId" element={<BookingPage />} /> 
+            <Route path="/payment/:bookingId" element={<PaymentPage />} />  
+            <Route path="/bookings/invoice/:bookingId" element={<InvoicePage/>} /> 
+            <Route path="/payment/result" element={<PaymentResultPage />} />
+            <Route path="/verify-invoice/:token" element={<VerifyInvoicePage />} />
 
              {/* ===== TOUR & ITINERARY ROUTES ===== */}
             <Route path="/create-itinerary" element={<CreateItinerary />} />
@@ -59,6 +75,14 @@ const AppRouter = () => {
                 element={
                     <PrivateRoute>
                         <EditTour />
+                    </PrivateRoute>
+                }
+            />
+            <Route
+                path="/profile/my-bookings"
+                element={
+                    <PrivateRoute>
+                        <MyBookingsPage />
                     </PrivateRoute>
                 }
             />

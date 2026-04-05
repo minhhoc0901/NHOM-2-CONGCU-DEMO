@@ -7,16 +7,26 @@ export const tourService = {
     
     async getToursForSale(filters = {}) {
         try {
+            // Map frontend filter names to backend parameter names
+            const backendParams = {
+                page: filters.page || 1,
+                limit: filters.limit || 12,
+                destination: filters.location || filters.destination || undefined,
+                price_min: filters.minPrice || filters.price_min || undefined,
+                price_max: filters.maxPrice || filters.price_max || undefined,
+                duration: filters.duration || undefined,
+                sort_by: filters.sortBy === 'price' ? 'price' : 'latest'
+            };
+
             const queryParams = new URLSearchParams();
             
-            Object.keys(filters).forEach(key => {
-                if (filters[key] !== null && filters[key] !== undefined && filters[key] !== '') {
-                    queryParams.append(key, filters[key]);
+            Object.keys(backendParams).forEach(key => {
+                if (backendParams[key] !== null && backendParams[key] !== undefined && backendParams[key] !== '') {
+                    queryParams.append(key, backendParams[key]);
                 }
             });
 
-            // Thêm log để kiểm tra chuỗi query
-            console.log('Fetching tours with filters:', queryParams.toString());
+            console.log('Fetching tours with params:', queryParams.toString());
             
             const response = await fetch(`${API_BASE_URL}/tours/for-sale?${queryParams.toString()}`);
             
@@ -25,7 +35,27 @@ export const tourService = {
                 throw new Error(errorData.message || 'Failed to fetch tours');
             }
             
-            return await response.json();
+            const data = await response.json();
+            
+            // Transform response data to match frontend expectations
+            if (data.success && data.data) {
+                return {
+                    success: true,
+                    data: {
+                        tours: data.data.tours || [],
+                        pagination: {
+                            page: data.data.pagination?.page || 1,
+                            limit: data.data.pagination?.limit || backendParams.limit,
+                            total: data.data.pagination?.total || 0,
+                            totalPages: data.data.pagination?.totalPages || 1,
+                            hasNext: data.data.pagination?.hasNext ?? false,
+                            hasPrev: data.data.pagination?.hasPrev ?? false
+                        }
+                    }
+                };
+            }
+            
+            return data;
         } catch (error) {
             console.error('Error fetching tours:', error);
             throw error;
