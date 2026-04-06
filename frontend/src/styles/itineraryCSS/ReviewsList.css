@@ -1,0 +1,27 @@
+/* Styles for ReviewsList component */
+.reviews-list-container {
+  display: grid;
+  gap: 16px;
+}
+.review-item {
+  border: 1px solid #e0e0e0;
+  border-radius: 8px;
+  padding: 16px;
+  background: #fff;
+}
+.review-author-info {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+  margin-bottom: 12px;
+}
+.reviewer-avatar {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+.review-comment-text {
+  margin-top: 12px;
+  line-height: 1.6;
+}

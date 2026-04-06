@@ -1,0 +1,37 @@
+services:
+  db:
+    image: mysql:8.0
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: "0393146946"
+      MYSQL_DATABASE: phuyen_travel_5
+    ports:
+      - "3307:3306"
+    volumes:
+      - db_data:/var/lib/mysql
+      # Lưu ý: Khi chạy trên server mới, bạn vẫn cần thư mục init-db nếu muốn auto-import dữ liệu
+      - ./init-db:/docker-entrypoint-initdb.d
+
+  backend:
+    image: letoanban/nhom2-congcu:backend
+    restart: always
+    ports:
+      - "5000:5000"
+    env_file:
+      - ./backend/.env.docker
+    depends_on:
+      - db
+
+  frontend:
+    image: letoanban/nhom2-congcu:frontend
+    restart: always
+    ports:
+      - "5001:5001"
+    environment:
+      - PORT=5001
+      - REACT_APP_API_BASE_URL=http://backend:5000/api
+    depends_on:
+      - backend
+
+volumes:
+  db_data:
