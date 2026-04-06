@@ -113,7 +113,7 @@ Sidebar.propTypes = {
         })
       ])
     ), // Made nearby optional as we check for its existence before rendering
-    //  Thêm prop type cho nearbyHotels
+
     nearbyHotels: PropTypes.arrayOf(
       PropTypes.shape({
         id: PropTypes.number.isRequired,

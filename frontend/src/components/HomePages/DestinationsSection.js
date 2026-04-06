@@ -204,15 +204,13 @@ const DestinationsSection = () => {
                                 </p>
                                 
                                 <Link to={`/locations/${destination.id}`} className="pydes-explore-btn">
-                                    <span>Khám phá ngay</span>
+                                    <span>Xem Chi Tiết</span>
                                     <i className="bi bi-arrow-right"></i>
                                 </Link>
                             </div>
                         </div>
                     ))}
                 </div>
-
-                {/* ========== VIEW ALL BUTTON ========== */}
                 <div 
                     className="pydes-view-all"
                     data-aos="fade-up"
