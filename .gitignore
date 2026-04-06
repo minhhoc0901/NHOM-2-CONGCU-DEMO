@@ -25,6 +25,7 @@ backend/build
 .env.*
 *.env
 backend/.env
+backend/.env.docker
 frontend/.env
 frontend/src/.env
 backend/uploads/
