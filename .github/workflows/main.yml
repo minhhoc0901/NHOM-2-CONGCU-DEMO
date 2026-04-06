@@ -21,6 +21,32 @@ jobs:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_TOKEN }}
 
+      - name: Create backend env file from secrets
+        run: |
+          cat > backend/.env.docker <<'EOF'
+          DB_HOST=${{ secrets.DB_HOST }}
+          DB_PORT=${{ secrets.DB_PORT }}
+          DB_USER=${{ secrets.DB_USER }}
+          DB_PASSWORD=${{ secrets.DB_PASSWORD }}
+          DB_NAME=${{ secrets.DB_NAME }}
+          PORT=${{ secrets.BACKEND_PORT }}
+          FRONTEND_URL=${{ secrets.FRONTEND_URL }}
+          JWT_SECRET=${{ secrets.JWT_SECRET }}
+          EMAIL_USER=${{ secrets.EMAIL_USER }}
+          EMAIL_PASSWORD=${{ secrets.EMAIL_PASSWORD }}
+          EMAIL_FROM_NAME=${{ secrets.EMAIL_FROM_NAME }}
+          ADMIN_EMAIL=${{ secrets.ADMIN_EMAIL }}
+          VNP_TMN_CODE=${{ secrets.VNP_TMN_CODE }}
+          VNP_HASH_SECRET=${{ secrets.VNP_HASH_SECRET }}
+          VNP_PAYMENT_URL=${{ secrets.VNP_PAYMENT_URL }}
+          VNP_RETURN_URL=${{ secrets.VNP_RETURN_URL }}
+          VNP_IPN_URL=${{ secrets.VNP_IPN_URL }}
+          REACT_APP_OPENWEATHER_API_KEY=${{ secrets.REACT_APP_OPENWEATHER_API_KEY }}
+          CLOUDINARY_CLOUD_NAME=${{ secrets.CLOUDINARY_CLOUD_NAME }}
+          CLOUDINARY_API_KEY=${{ secrets.CLOUDINARY_API_KEY }}
+          CLOUDINARY_API_SECRET=${{ secrets.CLOUDINARY_API_SECRET }}
+          EOF
+
       - name: Build and push backend image
         uses: docker/build-push-action@v6
         with:
